@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { leagueId, getTeamId } from './mapping.mjs'
+import { leagueId, getTeamId, seasonId } from './mapping.mjs'
 
 const API_BASE_URL = 'https://v3.football.api-sports.io'
 const HEADERS = {
@@ -14,15 +14,33 @@ const apiClient = axios.create({
 })
 
 // TODO Get All live Prem Games
+export const getAllGamesByDate = async ({from, to, league = leagueId, season = seasonId}) => {
+    try {
+        const response = await apiClient.get(`/fixtures?league=${league}&season=${season}&from=${from}&to=${to}`)
+        console.log(response.data.response)
+        return response.data.response
+    } catch (error) {
+        throw error
+    }
+}
 
 // TODO Get Premier League Schedule
 
 // TODO Get Live Game by matchup
+export const getGameStats = async ({fixture}) => {
+    try {
+        const response = await apiClient.get(`/fixtures/statistics?fixture=${fixture}`)
+        console.log(response.data)
+        return response.data.response
+    } catch (error) {
+        throw error
+    }
+}
 
 // TODO Get Game stats by matchup
 
-// TODO Get player stats
-export const getPlayerStats = async ({id = false, team = "", league = leagueId, season = 2023, search = "", page = 1} = {}) => {
+// Get player stats
+export const getPlayerStats = async ({id = false, team = "", league = leagueId, season = seasonId, search = "", page = 1} = {}) => {
     try {
         let query
         console.log(id)
@@ -41,7 +59,7 @@ export const getPlayerStats = async ({id = false, team = "", league = leagueId, 
 }
 
 // Get all players by league and season
-export const getAllPlayers = async ({league = leagueId, season = 2023, page = 1}) => {
+export const getAllPlayers = async ({league = leagueId, season = seasonId, page = 1}) => {
     try {
         const response = await apiClient.get(`/players?league=${league}&season=${season}&page=${page}`)
         console.log(response.data.response)
@@ -52,7 +70,7 @@ export const getAllPlayers = async ({league = leagueId, season = 2023, page = 1}
 }
 
 // Get all teams by league and season
-export const getAllTeams = async ({league = leagueId, season = 2023, page = 1}) => {
+export const getAllTeams = async ({league = leagueId, season = seasonId, page = 1}) => {
     try {
         const response = await apiClient.get(`/teams?league=${league}&season=${season}&page=${page}`)
         console.log(response.data.response)
@@ -63,7 +81,7 @@ export const getAllTeams = async ({league = leagueId, season = 2023, page = 1}) 
 }
 
 // Get team stats by league, season, and team name
-export const getTeamStats = async ({league = leagueId, season = 2023, team}) => {
+export const getTeamStats = async ({league = leagueId, season = seasonId, team}) => {
     try {
         const response = await apiClient.get(`/teams/statistics?league=${league}&season=${season}&team=${getTeamId(team)}`)
         console.log(response.data.response)

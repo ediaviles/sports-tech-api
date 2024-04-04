@@ -1,4 +1,4 @@
-import { getPlayerStats, getAllPlayers, getAllTeams, getTeamStats } from "./services/api.mjs";
+import { getPlayerStats, getAllPlayers, getAllTeams, getTeamStats, getAllGamesByDate, getGameStats } from "./services/api.mjs";
 import cors from 'cors'
 import express from "express";
 const app = express();
@@ -14,7 +14,7 @@ app.get('/get-player-stats/:team/:player', async (req, res) => {
     try {
         const playerStats = await getPlayerStats({team: req.params.team, search: req.params.player})
         console.log(playerStats)
-        res.json(playerStats)
+        res.status(200).json(playerStats)
     } catch (error) {
         console.error(error)
         res.status(500).json({ message: 'Server error' })
@@ -25,7 +25,7 @@ app.get('/get-all-players/:page', async (_, res) => {
     try {
         const players = await getAllPlayers({page: req.params.page})
         console.log(players)
-        res.json(players)
+        res.status(200).json(players)
     } catch (error) {
         throw error
     }
@@ -35,7 +35,7 @@ app.get('/get-all-teams/:page', async (_, res) => {
     try {
         const teams = await getAllTeams({page: req.params.page})
         console.log(teams)
-        res.json(teams)
+        res.status(200).json(teams)
     } catch (error) {
         throw error
     }
@@ -45,7 +45,31 @@ app.get('/get-team-stats/:team', async (req, res) => {
     try {
         const teamStats = await getTeamStats({team: req.params.team})
         console.log(teamStats)
-        res.json(teamStats)
+        res.status(200).json(teamStats)
+    } catch (error) {
+        throw error
+    }
+})
+
+// date should be in the following format: YYYY-MM-DD
+// can take up to two parameters: from, to - if to is not provided, will return games for the only date specified
+app.get('/get-games', async (req, res) => {
+    try {
+        let { from, to } = req.query
+        if (to === undefined) to = from
+        const games = await getAllGamesByDate({from: from, to: to})
+        console.log(games)
+        res.status(200).json(games)
+    } catch (error) {
+        throw error
+    }
+})
+
+app.get('/get-game-stats/:fixtureId', async (req, res) => {
+    try {
+        const gameStats = await getGameStats({fixture: req.params.fixtureId})
+        console.log(gameStats)
+        res.status(200).json(gameStats)
     } catch (error) {
         throw error
     }

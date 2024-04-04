@@ -22,6 +22,7 @@ const teamNameToTeamId = {
 }
 
 export const leagueId = 39
+export const seasonId = 2023
 
 export const getTeamId = (teamName) => {
     return teamNameToTeamId[teamName]
