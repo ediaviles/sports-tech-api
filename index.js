@@ -1,4 +1,4 @@
-import { getPlayerStats, getAllPlayers, getAllTeams, getTeamStats, getAllGamesByDate, getGameStats } from "./services/api.mjs";
+import { getPlayerStats, getAllPlayers, getAllTeams, getTeamStats, getAllGamesByDate, getGameStats, getGameEvents } from "./services/api.mjs";
 import cors from 'cors'
 import express from "express";
 const app = express();
@@ -70,6 +70,16 @@ app.get('/get-game-stats/:fixtureId', async (req, res) => {
         const gameStats = await getGameStats({fixture: req.params.fixtureId})
         console.log(gameStats)
         res.status(200).json(gameStats)
+    } catch (error) {
+        throw error
+    }
+})
+
+app.get('/get-game-events/:fixtureId', async (req, res) => {
+    try {
+        const gameEvents = await getGameEvents({fixture: req.params.fixtureId})
+        console.log(gameEvents)
+        res.status(200).json(gameEvents)
     } catch (error) {
         throw error
     }

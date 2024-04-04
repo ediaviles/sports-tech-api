@@ -14,6 +14,8 @@ const apiClient = axios.create({
 })
 
 // TODO Get All live Prem Games
+
+// Get All Games by Date
 export const getAllGamesByDate = async ({from, to, league = leagueId, season = seasonId}) => {
     try {
         const response = await apiClient.get(`/fixtures?league=${league}&season=${season}&from=${from}&to=${to}`)
@@ -27,6 +29,8 @@ export const getAllGamesByDate = async ({from, to, league = leagueId, season = s
 // TODO Get Premier League Schedule
 
 // TODO Get Live Game by matchup
+
+// Get Game stats by fixtureId
 export const getGameStats = async ({fixture}) => {
     try {
         const response = await apiClient.get(`/fixtures/statistics?fixture=${fixture}`)
@@ -37,7 +41,16 @@ export const getGameStats = async ({fixture}) => {
     }
 }
 
-// TODO Get Game stats by matchup
+// Get Game events by fixtureId
+export const getGameEvents = async ({fixture}) => {
+    try {
+        const response = await apiClient.get(`/fixtures/events?fixture=${fixture}`)
+        console.log(response.data)
+        return response.data.response
+    } catch (error) {
+        throw error
+    }
+}
 
 // Get player stats
 export const getPlayerStats = async ({id = false, team = "", league = leagueId, season = seasonId, search = "", page = 1} = {}) => {
