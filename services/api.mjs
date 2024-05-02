@@ -104,4 +104,14 @@ export const getTeamStats = async ({league = leagueId, season = seasonId, team})
     }
 }
 
-// getPlayerStats({team: "Manchester City", search: "Walker"})
+// Get Team Lineups by fixtureId
+export const getTeamLineups = async ({fixtureId}) => {
+    try {
+        console.log(teamId)
+        const response = await apiClient.get(`/fixtures/lineups?fixture=${fixtureId}`)
+        console.log(response.data.response)
+        return response.data.response
+    } catch (error) {
+        throw error
+    }
+}
