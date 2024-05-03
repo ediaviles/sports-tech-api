@@ -3,9 +3,9 @@ import { leagueId, getTeamId, seasonId } from './mapping.mjs'
 
 const API_BASE_URL = 'https://v3.football.api-sports.io'
 const HEADERS = {
-    'x-rapid-api-key': '927598ab4112f25dbe01314ed5bc7fad',
+    'x-rapid-api-key': '35c46d944bcbe743dff3522c17dbf14b',
     'x-rapid-api-host': 'v3.football.api-sports.io',
-    'x-apisports-key': '927598ab4112f25dbe01314ed5bc7fad'
+    'x-apisports-key': '35c46d944bcbe743dff3522c17dbf14b'
 }
 
 const apiClient = axios.create({
@@ -19,7 +19,7 @@ const apiClient = axios.create({
 export const getAllGamesByDate = async ({from, to, league = leagueId, season = seasonId}) => {
     try {
         const response = await apiClient.get(`/fixtures?league=${league}&season=${season}&from=${from}&to=${to}`)
-        console.log(response.data.response)
+        console.log("response data:", response.data)
         return response.data.response
     } catch (error) {
         throw error
