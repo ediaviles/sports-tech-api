@@ -78,6 +78,19 @@ app.get('/get-team-lineups', async (req, res) => {
     }
 })
 
+app.get('/get-player-stats', async (req, res) => {
+    try {
+        let { id } = req.query
+        if (id === undefined) throw new Error('Fixture ID is required')
+        
+        const stats = await getPlayerStats({fixtureId: id})
+        console.log(stats)
+        res.status(200).json(stats)
+    } catch (error) {
+        throw error
+    }
+})
+
 app.get('/get-game-stats/:fixtureId', async (req, res) => {
     try {
         const gameStats = await getGameStats({fixture: req.params.fixtureId})

@@ -52,25 +52,6 @@ export const getGameEvents = async ({fixture}) => {
     }
 }
 
-// Get player stats
-export const getPlayerStats = async ({id = false, team = "", league = leagueId, season = seasonId, search = "", page = 1} = {}) => {
-    try {
-        let query
-        console.log(id)
-        if (id !== false) {
-            query = `id=${id}&season=${season}&page=${page}`
-        } else {
-            query = `team=${getTeamId(team)}&league=${league}&season=${season}&search=${search}&page=${page}`
-        }
-        console.log(query)
-        const response = await apiClient.get(`/players?${query}`)
-        console.log(response.data.response)
-        return response.data.response
-    } catch (error) {
-        throw error
-    }
-}
-
 // Get all players by league and season
 export const getAllPlayers = async ({league = leagueId, season = seasonId, page = 1}) => {
     try {
@@ -107,8 +88,18 @@ export const getTeamStats = async ({league = leagueId, season = seasonId, team})
 // Get Team Lineups by fixtureId
 export const getTeamLineups = async ({fixtureId}) => {
     try {
-        console.log(teamId)
         const response = await apiClient.get(`/fixtures/lineups?fixture=${fixtureId}`)
+        console.log(response.data.response)
+        return response.data.response
+    } catch (error) {
+        throw error
+    }
+}
+
+// Get Team Lineups by fixtureId
+export const getPlayerStats = async ({fixtureId}) => {
+    try {
+        const response = await apiClient.get(`/fixtures/players?fixture=${fixtureId}`)
         console.log(response.data.response)
         return response.data.response
     } catch (error) {
