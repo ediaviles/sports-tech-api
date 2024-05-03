@@ -3,9 +3,9 @@ import { leagueId, getTeamId, seasonId } from './mapping.mjs'
 
 const API_BASE_URL = 'https://v3.football.api-sports.io'
 const HEADERS = {
-    'x-rapid-api-key': '35c46d944bcbe743dff3522c17dbf14b',
+    'x-rapid-api-key': '927598ab4112f25dbe01314ed5bc7fad',
     'x-rapid-api-host': 'v3.football.api-sports.io',
-    'x-apisports-key': '35c46d944bcbe743dff3522c17dbf14b'
+    'x-apisports-key': '927598ab4112f25dbe01314ed5bc7fad'
 }
 
 const apiClient = axios.create({
